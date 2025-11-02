@@ -119,6 +119,22 @@ streamlit run src/app.py
 
 **🎉 Done!** Access the dashboard at [http://localhost:8501](http://localhost:8501)
 
+### ☁️ Deploy to Streamlit Cloud
+
+```bash
+# 1️⃣ Push to GitHub
+git add .
+git commit -m "Deploy to Streamlit Cloud"
+git push origin main
+
+# 2️⃣ Go to share.streamlit.io
+# 3️⃣ Connect your GitHub repo
+# 4️⃣ Set main file: src/app.py
+# 5️⃣ Click Deploy!
+```
+
+**📖 Detailed deployment guide:** [DEPLOYMENT.md](DEPLOYMENT.md)
+
 ---
 
 ## � Project Structure

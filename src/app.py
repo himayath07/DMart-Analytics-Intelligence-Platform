@@ -12,6 +12,7 @@ from datetime import datetime, timedelta
 import requests
 from typing import Dict, List, Optional
 import json
+import os
 
 # Page config with vibrant aesthetics
 st.set_page_config(
@@ -382,8 +383,8 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# API endpoint
-API_URL = "http://localhost:8000"
+# API endpoint - configurable for cloud deployment
+API_URL = os.environ.get("API_URL", None)  # None = standalone mode without API
 
 # USD to INR conversion rate (approximate)
 USD_TO_INR = 83.0
@@ -881,6 +882,61 @@ def main():
                             category_avg = df[df['Category'] == pred_category]['Sales'].mean()
                             historical_sales = [category_avg] * 30
                         
+                        # Check if API is configured
+                        if API_URL is None:
+                            # Standalone mode: use simple prediction based on historical average
+                            avg_sales = np.mean(historical_sales) if historical_sales else df[df['Category'] == pred_category]['Sales'].mean()
+                            # Apply discount factor (higher discount typically increases volume slightly)
+                            discount_factor = 1 + (pred_discount / 100) * 0.5  # 50% effectiveness
+                            pred_sales = avg_sales * discount_factor
+                            
+                            st.markdown(f"""
+                            <div class="prediction-result">
+                                <div style="display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 1rem;">
+                                    <div style="font-size: 3rem;">🎯</div>
+                                    <h2 style="margin: 0; font-size: 1.8rem; font-weight: 700; text-shadow: 0 2px 10px rgba(0,0,0,0.2);">
+                                        Estimated Sales
+                                    </h2>
+                                </div>
+                                <h1 style="margin: 1rem 0; font-size: 4rem; font-weight: 900; text-shadow: 0 4px 20px rgba(0,0,0,0.3);">
+                                    {format_inr(pred_sales)}
+                                </h1>
+                                <p style="margin: 0; opacity: 0.95; font-size: 1.2rem; font-weight: 500;">
+                                    📅 {pred_date.strftime('%d %B %Y')}
+                                </p>
+                                <p style="margin: 0.5rem 0 0 0; opacity: 0.9; font-size: 1rem;">
+                                    📦 {pred_category} | 🌍 {pred_region} | 💰 {pred_discount:.0f}% discount
+                                </p>
+                                <p style="margin: 1rem 0 0 0; opacity: 0.8; font-size: 0.85rem;">
+                                    ℹ️ Standalone mode (historical average-based estimation)
+                                </p>
+                            </div>
+                            """, unsafe_allow_html=True)
+                            
+                            # Show confidence range based on std dev
+                            std_dev = np.std(historical_sales) if len(historical_sales) > 1 else pred_sales * 0.15
+                            lower = max(0, pred_sales - 1.96 * std_dev)
+                            upper = pred_sales + 1.96 * std_dev
+                            
+                            st.markdown(f"""
+                            <div style="background: rgba(255,255,255,0.98); padding: 2rem; border-radius: 20px; 
+                                        box-shadow: 0 10px 40px rgba(0,0,0,0.2); margin-top: 1.5rem; text-align: center;">
+                                <h4 style="color: #667eea; margin: 0 0 1rem 0; font-size: 1.2rem; font-weight: 600;">
+                                    📊 Estimated Range
+                                </h4>
+                                <p style="font-size: 1.6rem; font-weight: 700; margin: 0; 
+                                          background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+                                          -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                                    {format_inr(lower)} - {format_inr(upper)}
+                                </p>
+                                <p style="color: #6b7280; margin: 0.5rem 0 0 0; font-size: 0.9rem;">
+                                    Based on historical data variance
+                                </p>
+                            </div>
+                            """, unsafe_allow_html=True)
+                            continue
+                        
+                        # API mode: use ML model
                         # Prepare prediction request with historical data
                         request_data = {
                             "category": pred_category,
