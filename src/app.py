@@ -403,8 +403,15 @@ def format_inr(amount: float) -> str:
 def load_data() -> pd.DataFrame:
     """Load and cache the sales data."""
     @st.cache_data
-    def _load_data():
+    def _load_data(uploaded_file=None):
         import os
+
+        # If uploaded file is provided, use it directly
+        if uploaded_file is not None:
+            df = pd.read_csv(uploaded_file)
+            if 'Order Date' in df.columns:
+                df['Order Date'] = pd.to_datetime(df['Order Date'], errors='coerce')
+            return df
 
         # Candidate paths to try (in order)
         candidates = []
@@ -434,24 +441,28 @@ def load_data() -> pd.DataFrame:
                 continue
 
         if found is None:
-            # If running inside Streamlit, allow the user to upload the file
-            st.warning("Sales data CSV not found in expected locations. Please upload the dataset or set the DATA_PATH environment variable.")
-            uploaded = st.file_uploader("Upload DMart CSV file", type=['csv'])
-            if uploaded is not None:
-                df = pd.read_csv(uploaded)
-            else:
-                # Raise a clear error so the app doesn't fail with a raw FileNotFoundError
-                raise FileNotFoundError(
-                    "DMart CSV not found. Tried: " + ", ".join(candidates) + ". Provide the file via the uploader or set DATA_PATH env var."
-                )
-        else:
-            df = pd.read_csv(found)
+            # Return None to trigger file uploader in main
+            return None
+        
+        df = pd.read_csv(found)
 
         # Ensure Order Date is parsed to datetime
         if 'Order Date' in df.columns:
             df['Order Date'] = pd.to_datetime(df['Order Date'], errors='coerce')
         return df
-    return _load_data()
+    
+    # Check if file uploader is needed
+    data = _load_data()
+    if data is None:
+        st.warning("📂 Sales data CSV not found. Please upload the dataset below.")
+        uploaded = st.file_uploader("Upload DMart CSV file", type=['csv'], key='data_uploader')
+        if uploaded is not None:
+            data = _load_data(uploaded)
+        else:
+            st.info("👆 Please upload the DMart_Grocery_Sales_-_Retail_Analytics_Dataset.csv file to continue.")
+            st.stop()
+    
+    return data
 
 def main():
     """Main Streamlit application."""

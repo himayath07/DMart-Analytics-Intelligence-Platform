@@ -163,6 +163,7 @@ wandb/
 # Large datasets (keep sample data)
 data/*.csv
 !data/DMart_sample_data.csv
+!data/DMart_Grocery_Sales_-_Retail_Analytics_Dataset.csv
 data/*.parquet
 data/*.feather
 data/*.json
