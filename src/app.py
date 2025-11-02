@@ -934,25 +934,24 @@ def main():
                                 </p>
                             </div>
                             """, unsafe_allow_html=True)
-                            continue
-                        
-                        # API mode: use ML model
-                        # Prepare prediction request with historical data
-                        request_data = {
-                            "category": pred_category,
-                            "subcategory": df[df['Category'] == pred_category]['Sub Category'].iloc[0],
-                            "region": pred_region,
-                            "date": pred_date.strftime("%Y-%m-%d"),
-                            "discount": pred_discount / 100,
-                            "historical_sales": historical_sales
-                        }
-                        
-                        # Call prediction API
-                        response = requests.post(
-                            f"{API_URL}/predict",
-                            json=request_data,
-                            timeout=10
-                        )
+                        else:
+                            # API mode: use ML model
+                            # Prepare prediction request with historical data
+                            request_data = {
+                                "category": pred_category,
+                                "subcategory": df[df['Category'] == pred_category]['Sub Category'].iloc[0],
+                                "region": pred_region,
+                                "date": pred_date.strftime("%Y-%m-%d"),
+                                "discount": pred_discount / 100,
+                                "historical_sales": historical_sales
+                            }
+                            
+                            # Call prediction API
+                            response = requests.post(
+                                f"{API_URL}/predict",
+                                json=request_data,
+                                timeout=10
+                            )
                         
                         if response.status_code == 200:
                             prediction = response.json()
@@ -998,14 +997,14 @@ def main():
                                     </p>
                                 </div>
                                 """, unsafe_allow_html=True)
-                        else:
-                            st.markdown("""
-                            <div style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); 
-                                        padding: 2rem; border-radius: 20px; color: white; text-align: center;">
-                                <h3 style="margin: 0; font-size: 1.5rem;">❌ Prediction Error</h3>
-                                <p style="margin: 0.5rem 0 0 0;">Please check your inputs and try again.</p>
-                            </div>
-                            """, unsafe_allow_html=True)
+                            else:
+                                st.markdown("""
+                                <div style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); 
+                                            padding: 2rem; border-radius: 20px; color: white; text-align: center;">
+                                    <h3 style="margin: 0; font-size: 1.5rem;">❌ Prediction Error</h3>
+                                    <p style="margin: 0.5rem 0 0 0;">Please check your inputs and try again.</p>
+                                </div>
+                                """, unsafe_allow_html=True)
                             
                     except requests.exceptions.Timeout:
                         st.markdown("""
