@@ -1,0 +1,376 @@
+# Python
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+.pybuilder/
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# pipenv
+Pipfile.lock
+
+# poetry
+poetry.lock
+
+# pdm
+.pdm.toml
+
+# PEP 582
+__pypackages__/
+
+# Celery stuff
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype static type analyzer
+.pytype/
+
+# Cython debug symbols
+cython_debug/
+
+# Machine Learning & Data Science
+# Trained models
+*.joblib
+*.pkl
+*.pickle
+*.h5
+*.hdf5
+*.pt
+*.pth
+*.ckpt
+*.pb
+*.onnx
+models/trained/*.joblib
+models/trained/*.pkl
+models/trained/*.h5
+
+# Model metrics and logs
+metrics_*.json
+training_logs/
+tensorboard_logs/
+mlruns/
+wandb/
+
+# Large datasets (keep sample data)
+data/*.csv
+!data/DMart_sample_data.csv
+!data/DMart_Grocery_Sales_-_Retail_Analytics_Dataset.csv
+data/*.parquet
+data/*.feather
+data/*.json
+data/*.xlsx
+data/*.xls
+data/raw/
+data/processed/
+data/interim/
+data/external/
+
+# Data cache
+*.cache
+.data_cache/
+
+# Streamlit
+.streamlit/secrets.toml
+.streamlit/config.toml
+
+# FastAPI / Uvicorn
+*.db
+api/*.log
+api/logs/
+*.sqlite
+
+# VS Code
+.vscode/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+.history/
+*.code-workspace
+
+# PyCharm
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Operating System
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# Project Specific
+# Temporary files
+temp/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+
+# Logs
+*.log
+logs/
+*.log.*
+
+# Backup files
+*.backup
+*.old
+
+# Configuration (keep templates)
+config.ini
+settings.json
+!config.template.ini
+!settings.template.json
+
+# API keys and secrets
+.env.local
+.env.*.local
+secrets.json
+credentials.json
+*.pem
+*.key
+
+# Output files
+output/
+results/
+reports/*.html
+reports/*.pdf
+
+# Plots and visualizations
+plots/
+figures/
+*.png
+*.jpg
+*.jpeg
+*.gif
+!docs/images/*.png
+!docs/images/*.jpg
+
+# Documentation builds
+docs/_build/
+docs/build/
+site/
+
+# Compressed files
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Node modules (if using any JS tools)
+node_modules/
+package-lock.json
+
+# Profiling data
+*.prof
+*.lprof
+
+# Editor backups
+*~
+*.swp
+*.swo
+.*.swp
+
+# Monitoring and metrics
+prometheus/
+grafana/
+
+# Docker (if used in future)
+docker-compose.override.yml
+.dockerignore
+
+# CI/CD
+.github/workflows/secrets/
+.gitlab-ci-local/
+
+# Research and experiments
+experiments/
+notebooks/scratch/
+sandbox/
+
+# Custom exclusions
+# Keep README and documentation
+!README.md
+!CONTRIBUTING.md
+!LICENSE
+!CHANGELOG.md
+!SOFTWARE_TECHNOLOGIES.md
+
+# Keep requirements files
+!requirements.txt
+!requirements-dev.txt
+!requirements-test.txt
+
+# Keep configuration templates
+!pytest.ini
+!.pylintrc
+!.flake8
+!setup.py
+!setup.cfg
+!pyproject.toml
+
+# Keep starter scripts
+!start_server.bat
+!scripts/*.py
+
+# Keep sample/test data
+!data/DMart_sample_data.csv
+!tests/fixtures/*.csv
